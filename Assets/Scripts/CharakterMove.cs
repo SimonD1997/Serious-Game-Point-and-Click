@@ -6,33 +6,64 @@ using UnityEngine.UIElements;
 public class CharakterMove : MonoBehaviour
 {
 
-
+    private Verb verb;
     private Vector2 lastPosition;
     private Vector2 followSpot;
     public float speed;
     public float perspektiveScale;
     public float perspektiveRatio;
 
+    public GameObject onClickable;
+    private Collider2D collision;
+
+    private Vector2 mousePosition;
+
     // Start is called before the first frame update
     void Start()
     {
         followSpot = transform.position;
+        verb = FindObjectOfType<Verb>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        
 
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && mousePosition.y >= -4.2 && verb.currentVerb == Verb.Action.walk)
         {
             followSpot = mousePosition;
+            CharakterFlip();
+            AdjustPerspektive();
+            
+            verb.setBackToWalk();
+            verb.verbString = "Walk to ";
+            verb.verbTextBox.text = verb.verbString;
         }
-        CharakterFlip();
-        AdjustPerspektive();
         transform.position = Vector2.MoveTowards(transform.position, followSpot, speed * Time.deltaTime);
+
+        // Funktionsfähigkeit ist noch zu überprüfen........!!!!
+        if (Input.GetMouseButtonDown(0) &&  onClickable == null)
+        {
+
+            verb.setBackToWalk();
+        }
+
+        // testen ob des tut !!!!!!!!!!!!!!!!:::::::::::::::::::::::
+        /*
+        if (Input.GetMouseButtonDown(0) && onClickable != null && verb.currentVerb == Verb.Action.walk)
+        {
+            while (collision == null)
+            {
+                followSpot = mousePosition;
+                CharakterFlip();
+                AdjustPerspektive();
+            }
+            collision = null;
+        }*/
     }
 
     
@@ -40,6 +71,7 @@ public class CharakterMove : MonoBehaviour
     private void OnCollisionStay2D(Collision2D collision)
     {
         followSpot = transform.position;
+
     }
 
     private void CharakterFlip()
@@ -62,4 +94,23 @@ public class CharakterMove : MonoBehaviour
         transform.localScale = Scale;
 
     }
+
+    public void WalkToObjekt(GameObject gameobject)
+    {
+        /*
+        while (collision == null)
+        {
+            this.followSpot = gameobject.transform.position;
+            CharakterFlip();
+            AdjustPerspektive();
+        }
+        collision = null;*/
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        this.collision = collision;
+    }
+
+
 }
