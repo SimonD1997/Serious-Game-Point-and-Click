@@ -2064,6 +2064,7 @@ MonoBehaviour:
   verbString: 'Walk '
   verbTextBox: {fileID: 1968518191}
   currentVerb: 0
+  buttonPressed: {fileID: 0}
 --- !u!114 &1123618554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2188,7 +2189,6 @@ GameObject:
   - component: {fileID: 1266446067}
   - component: {fileID: 1266446068}
   - component: {fileID: 1266446069}
-  - component: {fileID: 1266446070}
   m_Layer: 0
   m_Name: Charakter
   m_TagString: Untagged
@@ -2278,7 +2278,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   perspektiveScale: 0.1
-  perspektiveRatio: 6
+  perspektiveRatio: 6.99
+  onClickable: {fileID: 0}
 --- !u!50 &1266446068
 Rigidbody2D:
   serializedVersion: 4
@@ -2316,21 +2317,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.18386964, y: 0.25128257}
   m_Size: {x: 2.3780775, y: 0.6129237}
   m_Direction: 1
---- !u!114 &1266446070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266446064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c75003c27d750f445b5c73bcd44e4729, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventoryItem: []
-  itemSlots: []
-  combineAuwahl: {fileID: 0}
 --- !u!1 &1335876523
 GameObject:
   m_ObjectHideFlags: 0
@@ -2508,8 +2494,6 @@ GameObject:
   - component: {fileID: 1437313581}
   - component: {fileID: 1437313580}
   - component: {fileID: 1437313591}
-  - component: {fileID: 1437313589}
-  - component: {fileID: 1437313588}
   - component: {fileID: 1437313592}
   m_Layer: 0
   m_Name: LookFlowchart
@@ -2587,7 +2571,6 @@ MonoBehaviour:
   eventHandler: {fileID: 1437313581}
   commandList:
   - {fileID: 1437313580}
-  - {fileID: 1437313588}
   suppressAllAutoSelections: 0
 --- !u!114 &1437313583
 MonoBehaviour:
@@ -2614,7 +2597,7 @@ MonoBehaviour:
   fadeWhenDone: 1
   waitForClick: 1
   stopVoiceover: 0
-  waitForVO: 1
+  waitForVO: 0
   setSayDialog: {fileID: 0}
 --- !u!114 &1437313584
 MonoBehaviour:
@@ -2658,7 +2641,6 @@ MonoBehaviour:
   eventHandler: {fileID: 1437313584}
   commandList:
   - {fileID: 1437313583}
-  - {fileID: 1437313589}
   suppressAllAutoSelections: 0
 --- !u!114 &1437313586
 MonoBehaviour:
@@ -2684,8 +2666,10 @@ MonoBehaviour:
     y: -340
     width: 1114
     height: 859
-  selectedBlocks: []
-  selectedCommands: []
+  selectedBlocks:
+  - {fileID: 1437313585}
+  selectedCommands:
+  - {fileID: 1437313583}
   variables: []
   description: 
   stepPause: 0
@@ -2712,48 +2696,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1437313588
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1437313579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050fb9e6e72f442b3b883da8a965bdeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 9
-  indentLevel: 0
-  targetFlowchart: {fileID: 1437313586}
-  targetBlock: {fileID: 1437313591}
-  startLabel:
-    stringRef: {fileID: 0}
-    stringVal: 
-  startIndex: 0
-  callMode: 2
---- !u!114 &1437313589
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1437313579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 050fb9e6e72f442b3b883da8a965bdeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 7
-  indentLevel: 0
-  targetFlowchart: {fileID: 1437313586}
-  targetBlock: {fileID: 1437313591}
-  startLabel:
-    stringRef: {fileID: 0}
-    stringVal: 
-  startIndex: 0
-  callMode: 2
 --- !u!114 &1437313591
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -3163,7 +3105,7 @@ GameObject:
   - component: {fileID: 1734216991}
   - component: {fileID: 1734216994}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Inventar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3269,8 +3211,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryItem:
   - {fileID: 11400000, guid: 253e5f83745c7484686cee3205c25655, type: 2}
-  - {fileID: 11400000, guid: d9817bf6a5c1c9b439c2bc217da9c22b, type: 2}
+  - {fileID: 11400000, guid: 96697f24301c9d14f82603163f8f9e52, type: 2}
+  - {fileID: 11400000, guid: 35cae8178082e2d4e9feafdec19ba250, type: 2}
+  - {fileID: 11400000, guid: acda8143c11e6c949b2fecb12aa5ffa0, type: 2}
   - {fileID: 11400000, guid: 89294739a104da042a7cfae09ec32b22, type: 2}
+  - {fileID: 11400000, guid: d9817bf6a5c1c9b439c2bc217da9c22b, type: 2}
   itemSlots:
   - {fileID: 2023476074}
   - {fileID: 292813003}
@@ -3306,7 +3251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61dddfdc5e0e44ca298d8f46f7f5a915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedFlowchart: {fileID: 213062596}
+  selectedFlowchart: {fileID: 1437313586}
 --- !u!4 &1734350835
 Transform:
   m_ObjectHideFlags: 1

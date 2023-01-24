@@ -36,21 +36,28 @@ public class CharakterMove : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && mousePosition.y >= -4.2 && verb.currentVerb == Verb.Action.walk)
         {
             followSpot = mousePosition;
-            CharakterFlip();
-            AdjustPerspektive();
             
             verb.setBackToWalk();
             verb.verbString = "Walk to ";
             verb.verbTextBox.text = verb.verbString;
-        }
-        transform.position = Vector2.MoveTowards(transform.position, followSpot, speed * Time.deltaTime);
+        }else
+        
 
         // Funktionsfähigkeit ist noch zu überprüfen........!!!!
-        if (Input.GetMouseButtonDown(0) &&  onClickable == null)
+        if (Input.GetMouseButtonDown(0) &&  onClickable == null && mousePosition.y >= -4.2)
         {
-
+            
             verb.setBackToWalk();
+            followSpot = mousePosition;
+            
         }
+
+        // muss alles dauerhaft geuprdatet werden sonst funktioniert die Bewegung nicht.
+        transform.position = Vector2.MoveTowards(transform.position, followSpot, speed * Time.deltaTime);
+        CharakterFlip();
+        AdjustPerspektive();
+
+
 
         // testen ob des tut !!!!!!!!!!!!!!!!:::::::::::::::::::::::
         /*
@@ -88,7 +95,8 @@ public class CharakterMove : MonoBehaviour
 
     private void AdjustPerspektive()
     {
-        Vector2 Scale = transform.localScale;
+        
+        Vector2 Scale= transform.localScale;
         Scale.x = perspektiveScale * (perspektiveRatio - transform.position.y);
         Scale.y = perspektiveScale * (perspektiveRatio - transform.position.y);
         transform.localScale = Scale;
@@ -97,6 +105,10 @@ public class CharakterMove : MonoBehaviour
 
     public void WalkToObjekt(GameObject gameobject)
     {
+        this.followSpot = gameobject.transform.position;
+        CharakterFlip();
+        AdjustPerspektive();
+
         /*
         while (collision == null)
         {

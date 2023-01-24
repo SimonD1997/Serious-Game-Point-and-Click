@@ -39,7 +39,6 @@ public class Inventar : MonoBehaviour
     public void AddItem(GameObject item)
     {
        
-        
 
         for (int i = 0; i < inventoryItem.Length; i++)
         {
@@ -49,14 +48,10 @@ public class Inventar : MonoBehaviour
         // großes Problem, Keine Ahnung was da Los ist
         foreach (InventoryItems invItem in inventoryItem)
         {
-
             if (invItem.name == item.name)
             {
-                invItem.itemOwend = true;
-                
+                invItem.itemOwend = true;           
             }
-            
-
         }
 
     }
@@ -143,6 +138,32 @@ public class Inventar : MonoBehaviour
 
     public void CombineItems(InventoryItems item1, InventoryItems item2)
     {
+
+        if (item1.combinable == true && item2.combinable == true)
+        {
+            for (int i = 0; i < item1.combinableItems.Length; i++)
+            {
+                if (item1.combinableItems[i] == item2)
+                {
+                    AddItem(item1.combinableErgebnis[i]);
+                    item1.itemOwend = false;
+                    item2.itemOwend = false;
+                }
+            }
+     
+        }
+        else
+        {
+            if (item1.combinable == false)
+            {
+                item1.failBlock.StartExecution();
+            }
+            else if (item2.combinable == false)
+            {
+                item2.failBlock.StartExecution();
+            }
+            
+        }
         //überprüfen, welches ergebnis rauskommen soll. 
         // suche das enstprechende Item 
 
@@ -150,10 +171,6 @@ public class Inventar : MonoBehaviour
 
         //die zwei anderen Items gehen kaputt (falls des nicht immer so sein soll, braucht es die Eigenschaft noch in den InventoryItems)
         // heißt: RemoveItem();
-
-
-
-
 
         combineAuwahl = null;
     }

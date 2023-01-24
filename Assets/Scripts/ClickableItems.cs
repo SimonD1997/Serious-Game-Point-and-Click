@@ -131,6 +131,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         if (isItemInRange==false)
         {
             // Charaktermove aufrufen in richtung Objekt zu gehen und danach die Standart Aktion auszuführen.
+            charakterMove.WalkToObjekt(this.gameObject);
 
             //darauf achten, dass wenn noch ein zweiter klick irgendwohin passiert die Aktion abgebrochen wird.
         }
@@ -149,10 +150,12 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         else if (verb.currentVerb == Verb.Action.talkto && talkto == true && raycastString == this.gameObject.name)
         {
             TalkTo(); // keine speziellen Funktionen außer das durch des Verb die Flowchart aktiviert wird. 
-        }else if (verb.currentVerb == Verb.Action.walk)
+        }
+        /*
+        else if (verb.currentVerb == Verb.Action.walk)
         {
             charakterMove.WalkToObjekt(this.gameObject);
-        }
+        }*/
         else
         {
             // für Anzeige Verb auf die richtige Aktion setzen
