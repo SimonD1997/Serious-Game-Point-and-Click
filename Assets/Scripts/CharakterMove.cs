@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.AI;
 
 public class CharakterMove : MonoBehaviour
 {
@@ -18,11 +19,16 @@ public class CharakterMove : MonoBehaviour
 
     private Vector2 mousePosition;
 
+    private NavMeshAgent agent;
+
     // Start is called before the first frame update
     void Start()
     {
         followSpot = transform.position;
         verb = FindObjectOfType<Verb>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
     }
 
     // Update is called once per frame
@@ -51,9 +57,9 @@ public class CharakterMove : MonoBehaviour
             followSpot = mousePosition;
             
         }
-
+        agent.SetDestination(followSpot);
         // muss alles dauerhaft geuprdatet werden sonst funktioniert die Bewegung nicht.
-        transform.position = Vector2.MoveTowards(transform.position, followSpot, speed * Time.deltaTime);
+        //transform.position = Vector2.MoveTowards(transform.position, followSpot, speed * Time.deltaTime);
         CharakterFlip();
         AdjustPerspektive();
 
@@ -74,13 +80,14 @@ public class CharakterMove : MonoBehaviour
     }
 
     
-
+    /* wegen NavMesh nicht mehr gebraucht
+     * 
     private void OnCollisionStay2D(Collision2D collision)
     {
         followSpot = transform.position;
 
     }
-
+    */
     private void CharakterFlip()
     {
         if (followSpot.x < transform.position.x)
