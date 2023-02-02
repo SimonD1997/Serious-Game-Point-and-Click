@@ -6,6 +6,7 @@ public class PickupItem : ScriptableObject
 {
 
     private GameObject thisGame;
+    private InventoryItems item;
 
     private Inventar inventory;
 
@@ -75,6 +76,26 @@ public class PickupItem : ScriptableObject
         thisGame.SetActive(false);
 
         
+        Debug.Log("Ende");
+    }
+
+    public void inInventar(InventoryItems thisitem, GameObject gameObjekt)
+    {
+
+        Start();
+        //item = thisitem;
+        //Instantiate(item);
+        
+
+        //Item zum Inventar hinzufügen
+        inventory.AddItem(thisitem);
+
+
+
+        //Item auschalten und Collider auschalten
+        //gameObjekt.SetActive(false);
+
+
         Debug.Log("Ende");
     }
 }

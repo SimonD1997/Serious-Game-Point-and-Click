@@ -17,6 +17,8 @@ public class Inventar : MonoBehaviour
     public ItemSlot[] itemSlots;
 
     private Flowchart[] flowcharts;
+    public VariableReference use1;
+    public VariableReference use2;
 
     public InventoryItems combineAuwahl;
 
@@ -33,6 +35,9 @@ public class Inventar : MonoBehaviour
     void Update()
     {
         InitializeItemSlots();
+        //use1.Set<string>(combineAuwahl.itemName);
+        
+        
         
     }
 
@@ -63,6 +68,23 @@ public class Inventar : MonoBehaviour
 
     }
 
+    public void CobinableTrue(InventoryItems item)
+    {
+        item.combinable = true;
+    }
+
+    public void CobinableTrue(GameObject item)
+    {
+        foreach (InventoryItems invItem in inventoryItem)
+        {
+            if (item.name.StartsWith(invItem.name))
+            {
+                invItem.combinable = true;
+                invItem.zoom = false;
+            }
+        }
+    }
+
     public void RemoveItem(GameObject item)
     {
         foreach(InventoryItems invItem in inventoryItem)
@@ -83,7 +105,7 @@ public class Inventar : MonoBehaviour
        InventoryItems thisItem = InventoryItems.CreateInstance<InventoryItems>(); 
         foreach (InventoryItems invItem in inventoryItem)
         {
-            if (invItem.name == item.name)
+            if (item.name.StartsWith(thisItem.name))
             {
                 thisItem=invItem;
             }
@@ -138,14 +160,17 @@ public class Inventar : MonoBehaviour
 
     public void CombineItems(InventoryItems item1, InventoryItems item2)
     {
-
+        use1.Set<string>(item1.itemName);
+        use2.Set<string>(item2.itemName);
         if (item1.combinable == true && item2.combinable == true)
         {
             for (int i = 0; i < item1.combinableItems.Length; i++)
             {
                 if (item1.combinableItems[i] == item2)
                 {
+                    
                     AddItem(item1.combinableErgebnis[i]);
+                    //item1.cobineBlockEnd.StartExecution();
                     item1.itemOwend = false;
                     item2.itemOwend = false;
                 }
@@ -156,11 +181,11 @@ public class Inventar : MonoBehaviour
         {
             if (item1.combinable == false)
             {
-                item1.failBlock.StartExecution();
+               // item1.failBlock.StartExecution();
             }
             else if (item2.combinable == false)
             {
-                item2.failBlock.StartExecution();
+              //  item2.failBlock.StartExecution();
             }
             
         }
@@ -175,8 +200,9 @@ public class Inventar : MonoBehaviour
         combineAuwahl = null;
     }
 
-    public void testMethode()
+    public void combineAuswahl(InventoryItems item)
     {
-        print("test");
+        combineAuwahl = item;
+        use1.Set<string>(item.itemName);
     }
 }

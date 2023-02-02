@@ -76,6 +76,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
             verbstring = "Talk to ";
         }
 
+        
 
         // pickupItem = GetComponent<PickupItem>();
 
@@ -83,7 +84,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
     }
 
     //die richtigen Indicator suchen nach nach den ausgewählten Sachen
-
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject == player)
@@ -94,6 +95,25 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
             }
             // Show  indicator
             
+            isItemInRange = true;
+        }
+    }
+    */
+
+    /* // 
+     * 
+     * Weglassen da die Trigger nicht so gut funktioniern und man dann auch immer mit allen Objekten interagieren kann.
+     *
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject == player)
+        {
+            foreach (GameObject item in showVerbs)
+            {
+                item.SetActive(true);
+            }
+            // Show  indicator
+
             isItemInRange = true;
         }
     }
@@ -109,6 +129,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
             isItemInRange = false;
         }
     }
+    */
     private void OnMouseUpAsButton()
     {
         itemWasPressend = true;
@@ -150,6 +171,9 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         else if (verb.currentVerb == Verb.Action.talkto && talkto == true && raycastString == this.gameObject.name)
         {
             TalkTo(); // keine speziellen Funktionen außer das durch des Verb die Flowchart aktiviert wird. 
+        }else if (verb.currentVerb == Verb.Action.use && use == false && raycastString == this.gameObject.name)
+        {
+            inventar.combineAuwahl = null;
         }
         /*
         else if (verb.currentVerb == Verb.Action.walk)
@@ -206,16 +230,20 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
     }
         private void AddPhysics2DRaycaster()
         {
-            Physics2DRaycaster physicsRaycaster = FindObjectOfType<Physics2DRaycaster>();
-            if (physicsRaycaster == null)
+        
+        Physics2DRaycaster physicsRaycaster = FindObjectOfType<Physics2DRaycaster>();
+        
+        if (physicsRaycaster == null)
             {
-                Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
+           
+            Camera.main.gameObject.AddComponent<Physics2DRaycaster>();
             }
         }
 
 
     private void Use()
     {
+
         //ToDo: 
         //Abfragen ob bereits ein Objekt angewählt wurde. Dann dass zweite Objekt verbinden. Falls beide Objekte zusammenpassen
         if (inventar.combineAuwahl != null)
@@ -228,7 +256,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         }
         else
         {
-            inventar.combineAuwahl = item;
+            inventar.combineAuswahl(item);
         }
 
         
@@ -238,21 +266,50 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         
     }
 
-    private void PickUp()
+    private void UsewithGameobject()
     {
+
+        //ToDo: 
+        //Abfragen ob bereits ein Objekt angewählt wurde. Dann dass zweite Objekt verbinden. Falls beide Objekte zusammenpassen
+        if (inventar.combineAuwahl != null)
+        {
+
+            verbstring = "Use ";
+
+            //brauchen eine Methode um das Item zu zerstören und eine Aktion auszulösen
+            inventar.CombineItems(item, inventar.combineAuwahl);
+            //verbstring = "";
+            verb.setBackToWalk();
+        }
+         
+        
+
+    }
+
+
+        private void PickUp()
+    {
+
+        //verbstring = "";
         print("inside pickup");
-        pickupItem.inInventar(this.gameObject);
+        pickupItem.inInventar(this.item, this.gameObject);
+        //pickupItem.inInventar(this.gameObject);
+        verb.verbTextBox.text = "";
         verb.setBackToWalk();
     }
 
     private void LookAt()
     {
         verbstring = "LookAt" ;
+        verb.verbTextBox.text = "";
+        //verb.setBackToWalk();
     }
 
     private void TalkTo()
     {
-
+        //verbstring = "";
+        verb.verbTextBox.text = "";
+        //verb.setBackToWalk();
     }
 
 
@@ -266,6 +323,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         }else if (verb.currentVerb == Verb.Action.walk )
         {
             /// Direkt die Standartaktion anzeigen oder nicht ???
+            
              verb.verbTextBox.text = verb.verbString + this.gameObject.name;
         }
         else

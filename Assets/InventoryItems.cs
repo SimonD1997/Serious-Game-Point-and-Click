@@ -12,6 +12,8 @@ public class InventoryItems : ScriptableObject
 
     public GameObject gameObject;
 
+    public bool zoom;
+
     public bool combinable;
     public InventoryItems[] combinableItems; //Items die mit diesem Item kombiniert werden können
     public InventoryItems[] combinableErgebnis; //Items zu denen die Kombinationen werden

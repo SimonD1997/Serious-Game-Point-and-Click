@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class CharakterMove : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class CharakterMove : MonoBehaviour
     private Verb verb;
     private Vector2 lastPosition;
     private Vector2 followSpot;
+    public double UImaxHight = -2.2;
     public float speed;
     public float perspektiveScale;
     public float perspektiveRatio;
@@ -39,18 +41,18 @@ public class CharakterMove : MonoBehaviour
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
 
-        if (Input.GetMouseButtonDown(0) && mousePosition.y >= -4.2 && verb.currentVerb == Verb.Action.walk)
+        if (Input.GetMouseButtonDown(0) && mousePosition.y >= UImaxHight && verb.currentVerb == Verb.Action.walk)
         {
             followSpot = mousePosition;
             
             verb.setBackToWalk();
-            verb.verbString = "Walk to ";
+           verb.verbString = "Walk to ";
             verb.verbTextBox.text = verb.verbString;
         }else
         
 
         // Funktionsfähigkeit ist noch zu überprüfen........!!!!
-        if (Input.GetMouseButtonDown(0) &&  onClickable == null && mousePosition.y >= -4.2)
+        if (Input.GetMouseButtonDown(0) &&  onClickable == null && mousePosition.y >= UImaxHight)
         {
             
             verb.setBackToWalk();

@@ -10,10 +10,13 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private Inventar inventar;
 
     public Image image;
-    private TextMeshProUGUI textBox;
+    private TextMeshProUGUI textBox; 
 
     private Verb verb;
     private CharakterMove charakter;
+
+    public GameObject zoomPanel;
+    public ItemsInGroﬂ itemsInGroﬂ;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -59,7 +62,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         charakter = FindObjectOfType<CharakterMove>();
 
         textBox = GetComponentInChildren<TextMeshProUGUI>();
-
+        
     }
 
     // Update is called once per frame
@@ -92,7 +95,16 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         //ToDo: 
         //Abfragen ob bereits ein Objekt angew‰hlt wurde. Dann dass zweite Objekt verbinden. Falls beide Objekte zusammenpassen
-        if (inventar.combineAuwahl != null)
+        if (this.item.zoom == true || verb.currentVerb == Verb.Action.lookat)
+        {
+
+            itemsInGroﬂ.panelAn();
+            var object1 = Instantiate(this.item.gameObject, zoomPanel.transform);
+            itemsInGroﬂ.item = object1;
+            
+
+            Debug.Log("zoom");
+        }else if (inventar.combineAuwahl != null)
         {
             inventar.CombineItems(item, inventar.combineAuwahl);
 
@@ -100,7 +112,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else
         {
-            inventar.combineAuwahl = item;
+            inventar.combineAuswahl(item);
             verb.currentVerb = Verb.Action.use;
             verb.verbString = "Use ";
             verb.verbTextBox.text = verb.verbString + this.item.name;

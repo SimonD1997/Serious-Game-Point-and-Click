@@ -82,16 +82,18 @@ public class Verb : MonoBehaviour
 
     public void setBackToWalk()
     {
-        if (UseFlowchart.HasExecutingBlocks() || lookFlowchart.HasExecutingBlocks() || talkFlowchart.HasExecutingBlocks())
+        //wichtiig sonst stürtz das Programm ab. Wenn Noch Blöcke laufen
+        if (UseFlowchart.HasExecutingBlocks() || lookFlowchart.HasExecutingBlocks() || talkFlowchart.HasExecutingBlocks() || pickFlowchart.HasExecutingBlocks())
         {
             return;
         }
 
         
          currentVerb = Action.walk;
-
-
         
+
+
+
 
         UseFlowchart.gameObject.SetActive(false);
         lookFlowchart.gameObject.SetActive(false);
