@@ -152,7 +152,9 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         if (isItemInRange==false)
         {
             // Charaktermove aufrufen in richtung Objekt zu gehen und danach die Standart Aktion auszuführen.
+            
             charakterMove.WalkToObjekt(this.gameObject);
+
 
             //darauf achten, dass wenn noch ein zweiter klick irgendwohin passiert die Aktion abgebrochen wird.
         }
@@ -250,7 +252,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         {
 
             verbstring = "Use ";
-            inventar.CombineItems(item, inventar.combineAuwahl);
+            inventar.CombineItems(inventar.combineAuwahl, item);
             
             verb.setBackToWalk();
         }
@@ -277,7 +279,8 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
             verbstring = "Use ";
 
             //brauchen eine Methode um das Item zu zerstören und eine Aktion auszulösen
-            inventar.CombineItems(item, inventar.combineAuwahl);
+            inventar.CombineItems(inventar.combineAuwahl, item);
+            verb.verbTextBox.text = "";
             //verbstring = "";
             verb.setBackToWalk();
         }
@@ -295,7 +298,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         pickupItem.inInventar(this.item, this.gameObject);
         //pickupItem.inInventar(this.gameObject);
         verb.verbTextBox.text = "";
-        verb.setBackToWalk();
+        //verb.setBackToWalk();
     }
 
     private void LookAt()
@@ -317,7 +320,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
     public void OnPointerEnter(PointerEventData eventData)
     {
         charakterMove.onClickable = this.gameObject;
-        if (verb.currentVerb == Verb.Action.use && inventar.combineAuwahl != null)
+        if (verb.currentVerb == Verb.Action.use && inventar.combineAuwahl != null && this.use == true)
         {
             verb.verbTextBox.text = verb.verbString + inventar.combineAuwahl.itemName + " with " + this.gameObject.name;
         }else if (verb.currentVerb == Verb.Action.walk )
@@ -325,6 +328,10 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
             /// Direkt die Standartaktion anzeigen oder nicht ???
             
              verb.verbTextBox.text = verb.verbString + this.gameObject.name;
+        }else if (verb.currentVerb == Verb.Action.use && this.use == false)
+        {
+            // nichts tun
+            return;
         }
         else
         {
@@ -339,7 +346,7 @@ public class ClickableItems : MonoBehaviour , IPointerDownHandler, IPointerEnter
         charakterMove.onClickable = null;
         if (verb.currentVerb == Verb.Action.use )
         {
-            
+            return;
         }
         else
         {

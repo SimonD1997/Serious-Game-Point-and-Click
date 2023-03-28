@@ -23,6 +23,9 @@ public class Verb : MonoBehaviour
     public Flowchart lookFlowchart;
     public Flowchart talkFlowchart;
     public Flowchart pickFlowchart;
+    public VariableReference use1;
+    public VariableReference use2;
+
 
     public string verbString = "Walk to ";
 
@@ -90,12 +93,14 @@ public class Verb : MonoBehaviour
 
         
          currentVerb = Action.walk;
-        
 
 
 
 
+        use1.Set<string>("");
+        use2.Set<string>("");
         UseFlowchart.gameObject.SetActive(false);
+         
         lookFlowchart.gameObject.SetActive(false);
         talkFlowchart.gameObject.SetActive(false);
         pickFlowchart.gameObject.SetActive(false);
@@ -123,8 +128,10 @@ public class Verb : MonoBehaviour
 
 
         // Walk String im Movement setzen!!!
-
-        //UseFlowchart.gameObject.SetActive(false);
+        use1.Set<string>("");
+        use2.Set<string>("");
+        UseFlowchart.gameObject.SetActive(false);
+        
         lookFlowchart.gameObject.SetActive(false);
         talkFlowchart.gameObject.SetActive(false);
         pickFlowchart.gameObject.SetActive(false);

@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9fad09386dfc0e448beeaa68a927b57, type: 3}
   m_Name: Klo
   m_EditorClassIdentifier: 
-  itemOwend: 1
+  itemOwend: 0
   itemName: Klo
   itemIcon: {fileID: 21300000, guid: 612c5e166a121e3449dad067fbdc37a4, type: 3}
   gameObject: {fileID: 0}
+  zoom: 0
   combinable: 1
   combinableItems:
   - {fileID: 11400000, guid: acda8143c11e6c949b2fecb12aa5ffa0, type: 2}

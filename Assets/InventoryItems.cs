@@ -13,6 +13,7 @@ public class InventoryItems : ScriptableObject
     public GameObject gameObject;
 
     public bool zoom;
+    public bool startZoom;
 
     public bool combinable;
     public InventoryItems[] combinableItems; //Items die mit diesem Item kombiniert werden können
@@ -20,6 +21,8 @@ public class InventoryItems : ScriptableObject
 
     public Block failBlock; //Block in Fungus der Aufgerufen wird, wenn die Kombination mit dem Block nicht korrekt war.
     public Block cobineBlockEnd; //Block in Fungus der Aufgerufen wird, wenn ein Neues Item entstanden ist.
+
+
 
 
 }

@@ -17,6 +17,7 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: d0be4788ad82a7c46b814d98dbb88cd5, type: 3}
   gameObject: {fileID: 1467843182600674622, guid: 7c6d01596d3c6af4fa1f19d8897afa53, type: 3}
   zoom: 1
+  startZoom: 1
   combinable: 0
   combinableItems:
   - {fileID: 11400000, guid: d9817bf6a5c1c9b439c2bc217da9c22b, type: 2}

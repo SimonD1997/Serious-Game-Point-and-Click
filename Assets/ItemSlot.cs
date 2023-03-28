@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
+using Fungus;
 
 public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -17,6 +18,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public GameObject zoomPanel;
     public ItemsInGroﬂ itemsInGroﬂ;
+
+    public Flowchart lookFlowchart;
+    public Flowchart talkFlowchart;
+    public Flowchart pickFlowchart;
+    public Flowchart useFlowchart;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -95,9 +101,12 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         //ToDo: 
         //Abfragen ob bereits ein Objekt angew‰hlt wurde. Dann dass zweite Objekt verbinden. Falls beide Objekte zusammenpassen
-        if (this.item.zoom == true || verb.currentVerb == Verb.Action.lookat)
+        if ((this.item.zoom == true && verb.currentVerb == Verb.Action.lookat) || this.item.startZoom == true)
         {
-
+            if (itemsInGroﬂ.isPanelAn())
+            {
+                itemsInGroﬂ.destreoyObject();
+            }
             itemsInGroﬂ.panelAn();
             var object1 = Instantiate(this.item.gameObject, zoomPanel.transform);
             itemsInGroﬂ.item = object1;
@@ -106,8 +115,27 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             Debug.Log("zoom");
         }else if (inventar.combineAuwahl != null)
         {
-            inventar.CombineItems(item, inventar.combineAuwahl);
+            inventar.CombineItems(inventar.combineAuwahl, item);
+            useFlowchart.SendFungusMessage(item.itemName);
+            verb.setBackToWalk();
+        }else if (verb.currentVerb == Verb.Action.pickup)
+        {
+            pickFlowchart.SendFungusMessage(item.itemName);
+            verb.setBackToWalk();
+            //item.pickupBlock.StartExecution();
+        }
+        else if (verb.currentVerb == Verb.Action.lookat)
+        {
+            lookFlowchart.SendFungusMessage(item.itemName);
 
+            verb.setBackToWalk();
+            //item.loookBlock.StartExecution();
+
+        }
+        else if (verb.currentVerb == Verb.Action.talkto)
+        {
+            talkFlowchart.SendFungusMessage(item.itemName);
+            //item.talkBlock.StartExecution();
             verb.setBackToWalk();
         }
         else

@@ -80,7 +80,8 @@ public class Inventar : MonoBehaviour
             if (item.name.StartsWith(invItem.name))
             {
                 invItem.combinable = true;
-                invItem.zoom = false;
+                
+                invItem.startZoom = false;
             }
         }
     }

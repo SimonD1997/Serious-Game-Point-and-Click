@@ -20,4 +20,9 @@ public class ItemsInGroß : MonoBehaviour
     {
         gameObject.SetActive(true);
     }
+
+    public bool isPanelAn()
+    {
+        return gameObject.activeSelf == true;
+    }
 }

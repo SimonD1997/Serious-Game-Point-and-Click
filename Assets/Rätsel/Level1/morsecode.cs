@@ -50,7 +50,7 @@ public class morsecode : MonoBehaviour
         
         if (code.StartsWith(loesung))
         {
-
+            
             inventar.CobinableTrue(this.gameObject);
         }
         else{

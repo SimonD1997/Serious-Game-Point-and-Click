@@ -22,6 +22,7 @@ public class CharakterMove : MonoBehaviour
     private Vector2 mousePosition;
 
     private NavMeshAgent agent;
+    public bool agentHasStopped;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class CharakterMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        agentHasStopped = agent.isStopped;
 
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -65,7 +66,7 @@ public class CharakterMove : MonoBehaviour
         CharakterFlip();
         AdjustPerspektive();
 
-
+        
 
         // testen ob des tut !!!!!!!!!!!!!!!!:::::::::::::::::::::::
         /*
